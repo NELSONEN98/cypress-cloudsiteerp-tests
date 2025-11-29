@@ -1,0 +1,10 @@
+{
+  "admin": {
+    "username": "admin_user_baff_demos",
+    "password": "3bMl2n*Dy"
+  },
+  "regular": {
+    "username": "regular_user",
+    "password": "abc123"
+  }
+}
