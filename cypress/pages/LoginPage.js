@@ -20,6 +20,7 @@ class LoginPage {
    */
     visit() {
         cy.visit('/');
+        return this;
     }
 
     /**

@@ -15,6 +15,8 @@ describe('Login Main App', () => {
   })
 
 
+  
+
   context('Login exitoso', () => {
 
     it('Debe permitir login como administrador', () => {
@@ -96,4 +98,17 @@ describe('Login Main App', () => {
 
   });
 
+  // cypress/e2e/auth/test-login-api.cy.js
+  
+  describe('Debe de iniciar sesión con el metodo headless', () => {
+  
+  it.only('login headless', () => {
+  cy.loginWithSessionCache('admin');
+  cy.visit('https://stage.cloudsiteerp.com/cotizaciones/crear-cotizacion');
+
+  cy.url().should('include', '/cotizaciones');
+  
+});
+
+});
 });
