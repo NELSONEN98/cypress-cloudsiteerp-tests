@@ -128,13 +128,26 @@ Cypress.Commands.add('loginWithSessionCache', (userRole) => {
         }).then((response) => {
           expect(response.status).to.eq(200);
           cy.log('✅ Login successful - Cookie set automatically');
+          
+          // Establecer la cookie tenantRole para que el menú cargue correctamente
+          const tenantRole = user.role || 'tenantAdmin';
+          cy.setCookie('tenantRole', tenantRole, {
+            domain: 'stage.cloudsiteerp.com',
+            path: '/',
+            secure: true,
+            sameSite: 'Strict'
+          });
+          cy.log(`🍪 Cookie tenantRole set: ${tenantRole}`);
+          
         });
+        
       });
     },
     {
       validate() {
         // Validar que la sesión sigue válida
         cy.getCookie('accessToken').should('exist');
+        cy.getCookie('tenantRole').should('exist');
       }
     }
   );
