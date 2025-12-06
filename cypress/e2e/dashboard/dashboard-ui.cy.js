@@ -3,7 +3,8 @@ import DashboardPage from "../../pages/DashboardPage";
 describe('Dashboard UI', () => {
 
     beforeEach(() => {
-        cy.loginWithSessionCache('admin');
+        cy.loginAs('admin');
+        //cy.loginWithSessionCache('admin');
         //cy.visit('/');
     });
 
@@ -25,6 +26,7 @@ describe('Dashboard UI', () => {
 
         it('Debe mostrar el menú Cotizaciones con sus subitems', () => {
             DashboardPage.ensureMenuOpen('Cotizaciones');
+            DashboardPage.checkMenuIcon('Cotizaciones');
             DashboardPage.verifyMenuStructure('Cotizaciones', [
                 'Crear Cotización', 
                 'Ver Cotizaciones'

@@ -77,6 +77,30 @@ class DashboardPage {
         cy.contains('a', menuName).should('be.visible');
     }
 
+    checkMenuIcon(menuName) {
+        cy.contains('button span', menuName)
+        .closest('button')
+        .find('svg:not(.lucide-chevron-down)')
+        .should('be.visible');
+    }
+
+    /**
+     * Verifica que cada subitem del menú tenga un ícono SVG visible
+     * @param {string} parentMenuName - Nombre del menú padre (ej: 'Cotizaciones')
+     * @param {string[]} subMenuItems - Array de nombres de subitems a verificar
+     */
+    checkAllSubMenusIcons(parentMenuName, subMenuItems) {
+        this.checkMenuIcon(parentMenuName);
+        this.getSubMenuContainer(parentMenuName).within(() => {
+            subMenuItems.forEach(item => {
+                cy.contains('a', item)
+                  .should('be.visible')
+                  .find('svg')
+                  .should('be.visible');
+            });
+        });
+    }
+
     /**
      * Verifica un subitem específico dentro de un menú padre
      * @param {string} parentMenuName - Nombre del menú padre
@@ -93,6 +117,8 @@ class DashboardPage {
           });
     }
 
+
+
     /**
      * Verifica múltiples subitems de un menú de una sola vez
      * @param {string} parentMenuName - Nombre del menú padre
@@ -100,8 +126,7 @@ class DashboardPage {
      * @example DashboardPage.checkAllSubMenuItems('Reportes', ['Cotizaciones', 'Recaudo', 'Clientes'])
      */
     checkAllSubMenuItems(parentMenuName, subMenuItems) {
-        console.log(parentMenuName)
-        console.log(subMenuItems)
+     
         cy.contains('button span', parentMenuName)
           .closest('button')
           .parent()
@@ -134,6 +159,7 @@ class DashboardPage {
      */
     verifyMenuStructure(menuName, expectedSubItems) {
         this.checkMenuExpanded(menuName);
+        this.checkAllSubMenusIcons(menuName, expectedSubItems);
         this.checkAllSubMenuItems(menuName, expectedSubItems);
     }
 
